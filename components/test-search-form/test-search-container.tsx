@@ -35,10 +35,11 @@ const TestSearchContainer = () => {
     if (!URL) return;
 
     const resp = await fetch("/api", {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({ question }),
     });
     const respData: unknown = await resp.json();
 

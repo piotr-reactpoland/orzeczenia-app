@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import fetch from "node-fetch";
 
-export async function GET(request) {
+export async function POST(request) {
   try {
+    const body = await request.json();
+    const { question } = body;
+
     const response = await fetch("http://3.16.160.92/find", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question: "amfetamina" }),
+      body: JSON.stringify({ question }),
     });
     const data = await response.json();
     return NextResponse.json(data);
@@ -18,9 +21,4 @@ export async function GET(request) {
       { status: 500 }
     );
   }
-}
-
-export async function POST(request) {
-  // Obsługa żądania POST
-  return NextResponse.json({ message: "Post request received" });
 }

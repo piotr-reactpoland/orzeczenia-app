@@ -32,7 +32,7 @@ const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
           </p>
           <DisplayResultsText text={text} scrollView={scrollView} />
           <Button
-            label="Wyświetl w osobnym oknie"
+            label="Wyświetl w nowym oknie"
             type="button"
             onClick={handleClick(id)}
             width="200px"
