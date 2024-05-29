@@ -34,7 +34,12 @@ const TestSearchContainer = () => {
     const question = data?.[FIELDS[0]];
     if (!URL) return;
 
-    const resp = await fetch("/api/proxy");
+    const resp = await fetch("/api/proxy", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     const test = await resp.json();
     console.log("🚀 ~ onSubmit ~ resp:", test);
     // const respData: unknown = await resp.json();
