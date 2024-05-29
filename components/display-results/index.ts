@@ -1,2 +1,2 @@
-import DisplayResults from "./Display-results-container";
+import DisplayResults from "./display-results-container";
 export default DisplayResults;
