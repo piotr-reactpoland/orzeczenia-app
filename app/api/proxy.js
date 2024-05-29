@@ -2,7 +2,15 @@ import fetch from "node-fetch";
 
 export default async function handler(req, res) {
   try {
-    const response = await fetch("http://localhost:8001/find");
+    const response = await fetch("http://localhost:8001/find", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question,
+      }),
+    });
     const data = await response.json();
     res.status(200).json({ dziala: "lol" });
   } catch (error) {
