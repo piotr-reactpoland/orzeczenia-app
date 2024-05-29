@@ -32,7 +32,7 @@ const TestSearchContainer = () => {
 
   const onSubmit = async (data: any) => {
     const question = data?.[FIELDS[0]];
-
+    console.log("🚀 ~ onSubmit ~ URL:", URL);
     if (!URL) return;
 
     const resp = await fetch(URL, {
