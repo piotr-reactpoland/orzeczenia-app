@@ -35,7 +35,7 @@ const TestSearchContainer = () => {
     console.log("🚀 ~ onSubmit ~ URL:", URL);
     if (!URL) return;
 
-    const resp = await fetch(URL, {
+    const resp = await fetch("/api/proxy", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
