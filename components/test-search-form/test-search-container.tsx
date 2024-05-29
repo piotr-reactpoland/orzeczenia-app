@@ -32,7 +32,6 @@ const TestSearchContainer = () => {
 
   const onSubmit = async (data: any) => {
     const question = data?.[FIELDS[0]];
-    console.log("🚀 ~ onSubmit ~ URL:", URL);
     if (!URL) return;
 
     const resp = await fetch("/api/proxy", {
@@ -44,18 +43,19 @@ const TestSearchContainer = () => {
         question,
       }),
     });
-    const respData: unknown = await resp.json();
+    console.log("🚀 ~ onSubmit ~ resp:", resp);
+    // const respData: unknown = await resp.json();
 
-    if (isStatusSuccess(respData)) {
-      if (respData && typeof respData === "object" && "data" in respData) {
-        const data = (respData.data as Array<any>).map((values) => ({
-          ...values,
-          id: uuidv4(),
-        }));
+    // if (isStatusSuccess(respData)) {
+    //   if (respData && typeof respData === "object" && "data" in respData) {
+    //     const data = (respData.data as Array<any>).map((values) => ({
+    //       ...values,
+    //       id: uuidv4(),
+    //     }));
 
-        value?.setValue([...data]);
-      }
-    }
+    //     value?.setValue([...data]);
+    //   }
+    // }
   };
 
   return (
