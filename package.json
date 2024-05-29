@@ -1,0 +1,29 @@
+{
+  "name": "search_llm",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:test": "NODE_ENV=test next dev",
+    "build": "next build NODE_ENV=test",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.5",
+    "sass": "^1.77.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "typescript": "^5"
+  }
+}
