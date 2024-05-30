@@ -1,0 +1,18 @@
+.select {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    select {
+      height: 30px;
+      width: 50px;
+      border-radius: 6px;
+      border: 1px solid black;
+      margin-bottom: 3px;
+    }
+    label {
+      padding-bottom: 3px;
+    }
+  }
+}

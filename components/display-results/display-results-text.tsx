@@ -7,7 +7,6 @@ interface DisplayResultsTextProps {
 }
 
 const DisplayResultsText = ({ text, scrollView }: DisplayResultsTextProps) => {
-  console.log("🚀 ~ DisplayResultsText ~ scrollView:", scrollView);
   return (
     <div
       className={classNames({
