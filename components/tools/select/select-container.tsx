@@ -1,10 +1,10 @@
 import { UseFormRegister } from "react-hook-form";
 import SelectView from "./select-view";
 import styles from "./select.module.scss";
+import React from "react";
 
 interface Props {
   options: string[];
-  onSelect?: () => void;
   label: string;
   defaultValue: string;
   width?: string;

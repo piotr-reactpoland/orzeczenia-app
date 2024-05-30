@@ -1,10 +1,10 @@
+import React from "react";
 import { SelectContainerProps } from "./select-container";
 
 type SelectViewProps = Omit<SelectContainerProps, "label">;
 
 const SelectView = ({
   defaultValue,
-  onSelect,
   options,
   width,
   disabled,
@@ -13,7 +13,6 @@ const SelectView = ({
 }: SelectViewProps) => {
   return (
     <select
-      onChange={onSelect}
       defaultValue={defaultValue}
       style={{ width }}
       disabled={disabled}
