@@ -5,9 +5,8 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const { question } = body;
-    const url = process.env.FETCH_NODE_URL;
 
-    const response = await fetch(url, {
+    const response = await fetch("http://3.16.160.92/find", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
