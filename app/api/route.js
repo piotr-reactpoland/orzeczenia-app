@@ -4,14 +4,15 @@ import fetch from "node-fetch";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { question } = body;
+    const { question, limit } = body;
+    const url = process.env.FETCH_NODE_URL;
 
-    const response = await fetch("http://3.16.160.92/find", {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify({ question, limit }),
     });
     const data = await response.json();
     return NextResponse.json(data);
