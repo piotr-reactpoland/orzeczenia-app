@@ -8,5 +8,8 @@
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+    @media (max-width: 900px) {
+      flex-wrap: wrap;
+    }
   }
 }

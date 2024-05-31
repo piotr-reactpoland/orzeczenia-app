@@ -4,6 +4,7 @@ import { useRouter } from "@/node_modules/next/navigation";
 import Button from "../tools/button/index";
 import DisplayResultsText from "./display-results-text";
 import styles from "./display-results.module.scss";
+import React from "react";
 
 interface ResultData {
   score: number;
