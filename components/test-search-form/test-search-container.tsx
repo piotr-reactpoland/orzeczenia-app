@@ -21,7 +21,7 @@ const isStatusSuccess = (data: unknown) => {
 };
 
 const DEFAULT_MODEL_OPTION = "OrlikB/st-polish-kartonberta-base-alpha-v1";
-const DEFAULT_LIMIT_OPTION = "7";
+const DEFAULT_LIMIT_OPTION = "6";
 
 const TestSearchContainer = () => {
   const value = useDataContext();
