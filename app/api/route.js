@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { question, limit } = body;
+    const { question, limit, model } = body;
     const url = process.env.FETCH_NODE_URL;
 
     const response = await fetch(url, {
@@ -12,7 +12,7 @@ export async function POST(request) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question, limit }),
+      body: JSON.stringify({ question, limit, model }),
     });
     const data = await response.json();
     return NextResponse.json(data);

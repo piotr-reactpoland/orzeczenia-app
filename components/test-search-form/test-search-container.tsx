@@ -5,9 +5,10 @@ import { useForm, useFormState } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../tools/button/index";
 import TestSearchFields from "./test-search-fields";
+import React from "react";
 import styles from "./test-search.module.scss";
 
-const FIELDS = ["search-input", "limit"];
+const FIELDS = ["search-input", "limit", "model"];
 const URL = process.env.FETCH_URL;
 
 const isStatusSuccess = (data: unknown) => {
@@ -19,13 +20,17 @@ const isStatusSuccess = (data: unknown) => {
   );
 };
 
+const DEFAULT_MODEL_OPTION = "OrlikB/st-polish-kartonberta-base-alpha-v1";
+const DEFAULT_LIMIT_OPTION = "7";
+
 const TestSearchContainer = () => {
   const value = useDataContext();
 
   const { register, handleSubmit, control } = useForm({
     defaultValues: {
       [FIELDS[0]]: "",
-      [FIELDS[1]]: "5",
+      [FIELDS[1]]: DEFAULT_LIMIT_OPTION,
+      [FIELDS[2]]: DEFAULT_MODEL_OPTION,
     },
   });
 
@@ -34,7 +39,8 @@ const TestSearchContainer = () => {
   const onSubmit = async (data: any) => {
     const question = data?.[FIELDS[0]];
     const limit = data?.[FIELDS[1]];
-    // TODO models to make
+    const model = data?.[FIELDS[2]];
+
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
 
@@ -43,7 +49,7 @@ const TestSearchContainer = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question, limit }),
+      body: JSON.stringify({ question, limit, model }),
     });
     const respData: unknown = await resp.json();
 

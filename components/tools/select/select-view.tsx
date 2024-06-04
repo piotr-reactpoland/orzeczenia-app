@@ -16,6 +16,7 @@ const SelectView = ({
       defaultValue={defaultValue}
       style={{ width }}
       disabled={disabled}
+      id={name}
       {...register(name)}
     >
       {options.map((option) => (
