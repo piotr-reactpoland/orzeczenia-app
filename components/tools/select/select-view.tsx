@@ -4,7 +4,6 @@ import { SelectContainerProps } from "./select-container";
 type SelectViewProps = Omit<SelectContainerProps, "label">;
 
 const SelectView = ({
-  defaultValue,
   options,
   width,
   disabled,
@@ -12,13 +11,7 @@ const SelectView = ({
   name,
 }: SelectViewProps) => {
   return (
-    <select
-      defaultValue={defaultValue}
-      style={{ width }}
-      disabled={disabled}
-      id={name}
-      {...register(name)}
-    >
+    <select style={{ width }} disabled={disabled} id={name} {...register(name)}>
       {options.map((option) => (
         <option key={option} value={option}>
           {option}

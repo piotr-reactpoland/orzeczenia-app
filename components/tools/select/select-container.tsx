@@ -6,7 +6,6 @@ import React from "react";
 interface Props {
   options: string[];
   label: string;
-  defaultValue: string;
   width?: string;
   disabled?: boolean;
   register: UseFormRegister<any>;
