@@ -64,7 +64,7 @@ const TestSearchContainer = () => {
           value?.setValue([...data]);
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.name === "AbortError") {
         throw new Error("Request timed out");
       }
