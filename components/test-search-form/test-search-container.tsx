@@ -44,24 +44,31 @@ const TestSearchContainer = () => {
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
 
-    const resp = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ question, limit, model }),
-    });
-    const respData: unknown = await resp.json();
+    try {
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question, limit, model }),
+      });
+      const respData: unknown = await resp.json();
 
-    if (isStatusSuccess(respData)) {
-      if (respData && typeof respData === "object" && "data" in respData) {
-        const data = (respData.data as Array<any>).map((values) => ({
-          ...values,
-          id: uuidv4(),
-        }));
+      if (isStatusSuccess(respData)) {
+        if (respData && typeof respData === "object" && "data" in respData) {
+          const data = (respData.data as Array<any>).map((values) => ({
+            ...values,
+            id: uuidv4(),
+          }));
 
-        value?.setValue([...data]);
+          value?.setValue([...data]);
+        }
       }
+    } catch (error) {
+      if (error.name === "AbortError") {
+        throw new Error("Request timed out");
+      }
+      throw error;
     }
   };
 
