@@ -6,7 +6,7 @@ const nextConfig = {
   reactStrictMode: false,
   env: {
     FETCH_URL: isLocal ? "http://localhost:8001/find" : "/api",
-    FETCH_NODE_URL: "http://18.191.185.239/find",
+    FETCH_NODE_URL: "http://18.222.249.243/find",
   },
 };
 
