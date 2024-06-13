@@ -3,9 +3,10 @@
 import { COLORS } from "./constants";
 import { SEARCH_HISTORY } from "../test-search-form/test-search-container";
 import { useDataContext } from "@/context/data-context";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../table/index";
 import { MODELS } from "../test-search-form/constants";
+import Button from "../tools/button/index";
 
 interface DataItem {
   [key: string]: string;
@@ -74,7 +75,13 @@ const createData = (storedItems: DataItem[]) => {
 };
 
 const SearchHistoryView = () => {
+  const [reload, setReload] = useState(false);
   useDataContext(); //refresh after update
+
+  useEffect(() => {
+    if (reload) setReload(false);
+  }, [reload]);
+
   let storedItems: any = localStorage.getItem(SEARCH_HISTORY);
 
   if (storedItems) {
@@ -82,7 +89,6 @@ const SearchHistoryView = () => {
   }
 
   const data = createData(storedItems || []);
-  console.log("🚀 ~ SearchHistoryView ~ data:", data);
 
   const duplicates = findDuplicates(data);
 
@@ -106,9 +112,22 @@ const SearchHistoryView = () => {
       }),
     }));
 
+  const handleClick = () => {
+    localStorage.setItem(SEARCH_HISTORY, "");
+    setReload(true);
+  };
+
   return (
     <>
-      <h3>Szybkie porównanie wyników wyszukiwania</h3>
+      <p>
+        <h3>Szybkie porównanie wyników wyszukiwania</h3>
+        <Button
+          label="Wyczyść historię"
+          type="button"
+          width="120px"
+          onClick={handleClick}
+        />
+      </p>
       {data.map((rows, index) => (
         <Table
           key={index}
