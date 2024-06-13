@@ -1,6 +1,6 @@
 "use client";
 
-import { COLORS, COLUMNS } from "./constants";
+import { COLORS } from "./constants";
 import { SEARCH_HISTORY } from "../test-search-form/test-search-container";
 import { useDataContext } from "@/context/data-context";
 import React from "react";
