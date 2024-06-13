@@ -7,6 +7,9 @@ import React, { useEffect, useState } from "react";
 import Table from "../table/index";
 import { MODELS } from "../test-search-form/constants";
 import Button from "../tools/button/index";
+import OpenImage from "../../shares/icons/open-image.svg";
+import Image from "@/node_modules/next/image";
+import styles from "./search-history.module.scss";
 
 interface DataItem {
   [key: string]: string;
@@ -18,13 +21,31 @@ const COLUMNS = Object.keys(MODELS).map((model, index) => ({
   title: model,
   dataIndex: `model-${index + 1}`,
   key: `model-${index + 1}`,
-  render: (value: DataItem) => (
-    <div>
-      <p>{value?.id}</p>
-      <br />
-      <p>{value?.score}</p>
-    </div>
-  ),
+  render: (value: DataItem) => {
+    const handleClick =
+      ({ id, score }: { id: string; score: string }) =>
+      () => {
+        const href = `${window.location.href}/${id}?score=${score}`;
+        window.open(href, "_blank", "noopener,noreferrer");
+      };
+
+    return value?.id ? (
+      <div className={styles["cell-render"]}>
+        <p>{value.id}</p>
+        <br />
+        <p>Dopasowanie: {value.score}</p>
+        <Image
+          className={styles["cell-render-image"]}
+          priority={false}
+          src={OpenImage}
+          alt="Open in a new window icon"
+          width={26}
+          height={26}
+          onClick={handleClick({ id: value.id, score: value.score })}
+        />
+      </div>
+    ) : null;
+  },
 }));
 
 const findDuplicates = (data: DataItem[][]) => {

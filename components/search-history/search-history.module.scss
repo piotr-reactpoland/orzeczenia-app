@@ -15,3 +15,13 @@
     }
   }
 }
+
+.cell-render {
+  position: relative;
+  &-image {
+    position: absolute;
+    bottom: -2px;
+    right: 2px;
+    cursor: pointer;
+  }
+}

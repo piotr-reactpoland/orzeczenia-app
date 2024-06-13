@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "@/node_modules/next/navigation";
+import { useRouter, usePathname } from "@/node_modules/next/navigation";
 import Button from "../tools/button/index";
 import DisplayResultsText from "./display-results-text";
 import styles from "./display-results.module.scss";
@@ -20,11 +20,12 @@ interface DisplayResultsViewProps {
 }
 
 const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
-  const router = useRouter();
-
-  const handleClick = (id: string) => () => {
-    router.push(`/tests/${id}`);
-  };
+  const handleClick =
+    ({ id, score }: { id: string; score: string }) =>
+    () => {
+      const href = `${window.location.href}/${id}?score=${score}`;
+      window.open(href, "_blank", "noopener,noreferrer");
+    };
 
   return (
     <div className={styles["display-results"]}>
@@ -41,7 +42,7 @@ const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
           <Button
             label="Wyświetl w nowym oknie"
             type="button"
-            onClick={handleClick(values.id)}
+            onClick={handleClick({ id: values.id, score })}
             width="200px"
           />
         </div>

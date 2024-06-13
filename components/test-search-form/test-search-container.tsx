@@ -52,7 +52,7 @@ const getValue = ({ data, model }: Value) =>
 
 const createValue = (values: CreateValue) => ({
   id: values?.values?.id,
-  score: `Dopasowanie: ${values.score?.toFixed(3)}`,
+  score: `${values.score?.toFixed(3)}`,
 });
 
 const setHistory = ({ data, model, question, limit }: HistoryData) => {

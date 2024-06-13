@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import Button from "../tools/button/index";
+import React from "react";
 import SearchHistoryView from "./search-history-view";
 import styles from "./search-history.module.scss";
 
