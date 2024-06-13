@@ -3,43 +3,40 @@
 import { COLORS, COLUMNS } from "./constants";
 import { SEARCH_HISTORY } from "../test-search-form/test-search-container";
 import { useDataContext } from "@/context/data-context";
-import React, { useRef } from "react";
+import React from "react";
 import Table from "../table/index";
+import { MODELS } from "../test-search-form/constants";
 
 interface DataItem {
   [key: string]: string;
 }
 
-interface Values {
-  data: any;
-  limit: string;
-  question: string;
-  model: string;
-}
-
-type CreateValues = Readonly<Values>;
-
-// # intfloat/multilingual-e5-base
-// # intfloat/multilingual-e5-large
-// # OrlikB/st-polish-kartonberta-base-alpha-v1
-// # sdadas/st-polish-paraphrase-from-distilroberta
-// # sdadas/st-polish-paraphrase-from-mpnet
-
 export type Columns = typeof COLUMNS;
+
+const COLUMNS = Object.keys(MODELS).map((model, index) => ({
+  title: model,
+  dataIndex: `model-${index + 1}`,
+  key: `model-${index + 1}`,
+  render: (value: DataItem) => (
+    <div>
+      <p>{value?.id}</p>
+      <br />
+      <p>{value?.score}</p>
+    </div>
+  ),
+}));
 
 const findDuplicates = (data: DataItem[][]) => {
   const values = data.reduce((acc: any, item: any) => {
     let occurrences: { [key: string]: number } = {};
 
     item?.forEach((val: any) => {
-      Object.values(val).forEach((value) => {
-        if (typeof value === "string") {
-          const splitValue = ((value as string) || "")?.split(" ")?.[0];
-
-          if (occurrences[splitValue as keyof typeof occurrences]) {
-            occurrences[splitValue as keyof typeof occurrences]++;
+      Object.values(val).forEach((value: any) => {
+        if (value?.id) {
+          if (occurrences[value.id as keyof typeof occurrences]) {
+            occurrences[value.id as keyof typeof occurrences]++;
           } else {
-            occurrences[splitValue as keyof typeof occurrences] = 1;
+            occurrences[value.id as keyof typeof occurrences] = 1;
           }
         }
       });
@@ -63,7 +60,6 @@ const createData = (storedItems: DataItem[]) => {
         if (index === 0) {
           return {
             ...item,
-            question: values.question,
             limit: values.data.length,
           };
         }
@@ -86,14 +82,13 @@ const SearchHistoryView = () => {
   }
 
   const data = createData(storedItems || []);
+  console.log("🚀 ~ SearchHistoryView ~ data:", data);
 
   const duplicates = findDuplicates(data);
 
-  const cellClassName = (value: string, tableIndex: number) => {
-    const splitValue = (value || "").split(" ")?.[0];
-
-    if (duplicates[tableIndex]?.includes(splitValue)) {
-      const index = duplicates[tableIndex]?.indexOf(splitValue);
+  const cellClassName = (value: DataItem, tableIndex: number) => {
+    if (duplicates[tableIndex]?.includes(value?.id)) {
+      const index = duplicates[tableIndex]?.indexOf(value.id);
       const colorName = Object.keys(COLORS)?.[index];
 
       if (colorName) {
@@ -119,7 +114,7 @@ const SearchHistoryView = () => {
           key={index}
           columns={columnsWithClassNames(index)}
           data={rows}
-          title={rows?.[0].question}
+          title={`Szukana fraza: ${storedItems?.[index].question}`}
         />
       ))}
     </>

@@ -6,7 +6,6 @@ import styles from "./tabs.module.scss";
 type TabsView = TabsContainerProps;
 
 const TabsView = ({ options = [], active, onClick }: TabsView) => {
-  console.log("🚀 ~ TabsView ~ active:", active);
   return (
     <>
       {options.map(({ id, label }) => (

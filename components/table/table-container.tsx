@@ -1,6 +1,6 @@
 import { Columns } from "../search-history/search-history-view";
 import React from "react";
-import TableView from "./TableView";
+import TableView from "./table-view";
 
 export interface TableContainerProps {
   columns: Columns;

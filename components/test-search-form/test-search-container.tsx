@@ -50,8 +50,10 @@ const getValue = ({ data, model }: Value) =>
     [MODELS[model as keyof typeof MODELS]]: createValue(values),
   }));
 
-const createValue = (values: CreateValue) =>
-  `${values?.values?.id} \n Score: ${values.score?.toFixed(3)}`;
+const createValue = (values: CreateValue) => ({
+  id: values?.values?.id,
+  score: `Dopasowanie: ${values.score?.toFixed(3)}`,
+});
 
 const setHistory = ({ data, model, question, limit }: HistoryData) => {
   let storedItems: any = localStorage.getItem(SEARCH_HISTORY);
