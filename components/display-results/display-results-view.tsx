@@ -21,7 +21,7 @@ interface DisplayResultsViewProps {
 
 const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
   const handleClick =
-    ({ id, score }: { id: string; score: string }) =>
+    ({ id, score }: { id: string; score: number }) =>
     () => {
       const href = `${window.location.href}/${id}?score=${score}`;
       window.open(href, "_blank", "noopener,noreferrer");
