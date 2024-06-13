@@ -8,8 +8,10 @@ import React from "react";
 
 interface ResultData {
   score: number;
-  text: string;
-  id: string;
+  values: {
+    id: string;
+    description: string;
+  };
 }
 
 interface DisplayResultsViewProps {
@@ -26,16 +28,20 @@ const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
 
   return (
     <div className={styles["display-results"]}>
-      {value?.map(({ id, text, score }) => (
-        <div key={id}>
+      {value?.map(({ values, score }) => (
+        <div key={values.id}>
           <p className={styles["display-results-score"]}>
-            Dopasowanie: {score?.toFixed(3)}
+            <span>Dopasowanie: {score?.toFixed(3)}</span>{" "}
+            <span>Id: {values.id}</span>
           </p>
-          <DisplayResultsText text={text} scrollView={scrollView} />
+          <DisplayResultsText
+            text={values.description}
+            scrollView={scrollView}
+          />
           <Button
             label="Wyświetl w nowym oknie"
             type="button"
-            onClick={handleClick(id)}
+            onClick={handleClick(values.id)}
             width="200px"
           />
         </div>

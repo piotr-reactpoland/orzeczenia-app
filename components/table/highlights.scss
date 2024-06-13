@@ -1,0 +1,30 @@
+$highlight-prefix: "highlight";
+
+$COLORS: (
+  red: "#FF5733",
+  green: "#33FF57",
+  blue: "#3357FF",
+  yellow: "#FFD633",
+  cyan: "#33FFFF",
+  magenta: "#FF33FF",
+  brown: "#A63636",
+  orange: "#FF8533",
+  purple: "#9E33A6",
+  pink: "#FF99CC",
+  navy: "#5733FF",
+  skyblue: "#3385FF",
+  teal: "#33CCCC",
+  seagreen: "#338B8B",
+  maroon: "#803333",
+  lime: "#85FF33",
+  olive: "#8B8B33",
+  silver: "#CCCCCC",
+  gold: "#FFC633",
+  indigo: "#5C33FF",
+);
+
+@each $colorName, $colorCode in $COLORS {
+  .#{$highlight-prefix}-#{$colorName} {
+    background-color: unquote($colorCode);
+  }
+}

@@ -7,12 +7,14 @@ import styles from "./display-results.module.scss";
 const DisplayResultsContainer = () => {
   const dataContext = useDataContext();
 
-  return dataContext?.value ? (
-    <div className={styles["display-results-container"]}>
+  return (
+    <section className={styles["display-results-container"]}>
       <h3>Wyniki wyszukiwania</h3>
-      <DisplayResultsView value={dataContext.value} scrollView />
-    </div>
-  ) : null;
+      {dataContext?.value ? (
+        <DisplayResultsView value={dataContext.value} scrollView />
+      ) : null}
+    </section>
+  );
 };
 
 export default DisplayResultsContainer;

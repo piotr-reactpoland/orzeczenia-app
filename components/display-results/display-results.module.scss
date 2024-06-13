@@ -21,6 +21,8 @@
   &-score {
     padding-bottom: 5px;
     font-weight: 600;
+    display: flex;
+    justify-content: space-between;
   }
 
   &-text {

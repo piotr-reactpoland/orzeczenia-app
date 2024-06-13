@@ -14,7 +14,7 @@ interface DisplayDetailsProps {
 const DisplayDetails = (props: DisplayDetailsProps) => {
   const resultId = props?.params?.["result-id"]?.[0];
   const value = useDataContext()?.value;
-  const result = value?.find((val) => val.id === resultId);
+  const result = value?.find((val) => val.values?.id === resultId);
 
   return (
     <div className={styles["display-details-container"]}>

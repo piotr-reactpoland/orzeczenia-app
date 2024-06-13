@@ -2,14 +2,39 @@
 
 import { useDataContext } from "@/context/data-context";
 import { useForm, useFormState } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 import Button from "../tools/button/index";
 import TestSearchFields from "./test-search-fields";
 import React from "react";
 import styles from "./test-search.module.scss";
+import { MODELS } from "./constants";
+
+interface Data {
+  data: Array<any>;
+  model: string;
+  question: string;
+  limit: number;
+}
+
+type HistoryData = Readonly<Data>;
+
+interface Value {
+  readonly data: Array<any>;
+  readonly model: string;
+}
+
+interface Values {
+  id: string;
+  description: string;
+}
+interface CreateValue {
+  readonly values: Values;
+  readonly score: number;
+}
 
 const FIELDS = ["search-input", "limit", "model"];
 const URL = process.env.FETCH_URL;
+const MAX_HISTORY_LENGTH = 5;
+export const SEARCH_HISTORY = "search-history";
 
 const isStatusSuccess = (data: unknown) => {
   return (
@@ -18,6 +43,93 @@ const isStatusSuccess = (data: unknown) => {
     "status" in data &&
     data.status === "success"
   );
+};
+
+const getValue = ({ data, model }: Value) =>
+  data.map((values) => ({
+    [MODELS[model as keyof typeof MODELS]]: createValue(values),
+  }));
+
+const createValue = (values: CreateValue) =>
+  `${values?.values?.id} \n Score: ${values.score?.toFixed(3)}`;
+
+const setHistory = ({ data, model, question, limit }: HistoryData) => {
+  let storedItems: any = localStorage.getItem(SEARCH_HISTORY);
+
+  if (storedItems) {
+    storedItems = JSON.parse(storedItems);
+  }
+
+  if (
+    storedItems &&
+    storedItems?.some(
+      (values: HistoryData) =>
+        values.model === model &&
+        values.question === question &&
+        values.limit === limit
+    )
+  ) {
+    return;
+  }
+
+  let dataToStore = null;
+
+  if (storedItems) {
+    const questionToUpdate = storedItems.find(
+      (item: HistoryData) => item.question === question
+    );
+
+    if (questionToUpdate?.question) {
+      const otherQuestions = storedItems.filter(
+        (item: HistoryData) => item.question !== question
+      );
+
+      data.forEach((values, index) => {
+        questionToUpdate.data[index] = {
+          ...questionToUpdate.data[index],
+          [MODELS[model as keyof typeof MODELS]]: createValue(values),
+        };
+      });
+
+      dataToStore = [{ ...questionToUpdate }, ...(otherQuestions || [])];
+    } else {
+      dataToStore = [
+        {
+          model,
+          question,
+          limit,
+          data: getValue({ data, model }),
+        },
+        ...(storedItems || []),
+      ];
+    }
+  } else {
+    dataToStore = [
+      {
+        model,
+        question,
+        limit,
+        data: getValue({ data, model }),
+      },
+    ];
+  }
+
+  if (dataToStore) {
+    let seen = new Set();
+
+    const questions = dataToStore.filter(({ question }) => {
+      let duplicate = seen.has(question);
+      seen.add(question);
+
+      return !duplicate;
+    });
+
+    if (questions.length > MAX_HISTORY_LENGTH) {
+      dataToStore.pop();
+    }
+
+    localStorage.setItem(SEARCH_HISTORY, JSON.stringify(dataToStore));
+  }
 };
 
 const DEFAULT_MODEL_OPTION = "OrlikB/st-polish-kartonberta-base-alpha-v1";
@@ -56,12 +168,13 @@ const TestSearchContainer = () => {
 
       if (isStatusSuccess(respData)) {
         if (respData && typeof respData === "object" && "data" in respData) {
-          const data = (respData.data as Array<any>).map((values) => ({
-            ...values,
-            id: uuidv4(),
-          }));
-
-          value?.setValue([...data]);
+          value?.setValue([...(respData.data as Array<any>)]);
+          setHistory({
+            data: respData.data as Array<any>,
+            model,
+            question,
+            limit,
+          });
         }
       }
     } catch (error: any) {

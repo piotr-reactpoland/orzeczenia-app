@@ -1,0 +1,18 @@
+.test-table {
+  font-size: 0.85rem;
+  margin: 10px 0;
+  table {
+    border-collapse: collapse;
+  }
+  thead,
+  tbody {
+    tr {
+      border: 1px solid black;
+      th,
+      td {
+        border-left: 1px solid black;
+        padding: 3px 6px;
+      }
+    }
+  }
+}
