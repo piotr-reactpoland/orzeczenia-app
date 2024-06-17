@@ -1,6 +1,7 @@
-import { Columns } from "../search-history/search-history-view";
+import { Columns } from "../search-history/search-history-table-view";
 import React from "react";
 import TableView from "./table-view";
+import styles from "./table.module.scss";
 
 export interface TableContainerProps {
   columns: Columns;
@@ -8,8 +9,13 @@ export interface TableContainerProps {
   title?: string;
 }
 
-const TableContainer = ({ columns, data = [], title }: TableContainerProps) => {
-  return <TableView columns={columns} data={data} title={title} />;
+const TableContainer = ({ columns, data, title }: TableContainerProps) => {
+  return (
+    <div className={styles["table-wrapper"]}>
+      <p>{title}</p>
+      <TableView columns={columns} data={data} />
+    </div>
+  );
 };
 
 export default TableContainer;

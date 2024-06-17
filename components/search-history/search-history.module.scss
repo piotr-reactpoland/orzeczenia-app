@@ -5,7 +5,7 @@
       text-align: center;
       padding-bottom: 15px;
     }
-    p {
+    > div > div > button {
       position: relative;
       & > div {
         position: absolute;
@@ -24,4 +24,7 @@
     right: 2px;
     cursor: pointer;
   }
+}
+.rc-table-cell-opacity {
+  opacity: 0.4;
 }
