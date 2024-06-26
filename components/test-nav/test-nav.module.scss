@@ -1,0 +1,9 @@
+.nav-link {
+  margin: 0 auto 0 0;
+  color: blue;
+  font-weight: 600;
+  height: 20px;
+  &:hover {
+    border-bottom: 2px solid blue;
+  }
+}

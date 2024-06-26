@@ -7,6 +7,7 @@ import TestSearchFields from "./test-search-fields";
 import React from "react";
 import styles from "./test-search.module.scss";
 import { MODELS } from "./constants";
+import { isStatusSuccess } from "../utils/index";
 
 interface Data {
   data: Array<any>;
@@ -35,15 +36,6 @@ const FIELDS = ["search-input", "limit", "model"];
 const URL = process.env.FETCH_URL;
 const MAX_HISTORY_LENGTH = 5;
 export const SEARCH_HISTORY = "search-history";
-
-const isStatusSuccess = (data: unknown) => {
-  return (
-    data &&
-    typeof data === "object" &&
-    "status" in data &&
-    data.status === "success"
-  );
-};
 
 const getValue = ({ data, model }: Value) =>
   data.map((values) => ({

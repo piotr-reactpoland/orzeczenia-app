@@ -1,7 +1,8 @@
 "use client";
 
-import styles from "./page.module.scss";
 import { DataContextProvider } from "@/context/data-context";
+import TestNav from "@/components/test-nav/index";
+import styles from "./page.module.scss";
 
 export default function RootLayout({
   children,
@@ -10,6 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <main className={styles.main}>
+      <TestNav />
       <DataContextProvider>{children}</DataContextProvider>
     </main>
   );

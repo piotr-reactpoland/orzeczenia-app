@@ -4,8 +4,9 @@ import React, { useState } from "react";
 import DisplayResults from "@/components/display-results/index";
 import SearchHistory from "@/components/search-history/index";
 import TestSearch from "@/components/test-search-form/index";
-import Button from "@/components/tools/button/index";
 import Tabs from "@/components/tools/tabs/index";
+import Link from "@/node_modules/next/link";
+import styles from "./page.module.scss";
 
 const BUTTONS = [
   {
@@ -27,6 +28,15 @@ const Tests = () => {
     setDisplayActiveElement(id);
   };
 
+  const getTabContent = (activeElement: string) => {
+    switch (activeElement) {
+      case SCORES_ACTIVE:
+        return <DisplayResults />;
+      default:
+        return <SearchHistory />;
+    }
+  };
+
   return (
     <section style={{ width: "100%" }}>
       <TestSearch />
@@ -35,7 +45,7 @@ const Tests = () => {
         active={activeElement}
         onClick={handleChangeTab}
       />
-      {activeElement === SCORES_ACTIVE ? <DisplayResults /> : <SearchHistory />}
+      {getTabContent(activeElement)}
     </section>
   );
 };
