@@ -3,10 +3,9 @@ import TabsView from "./tabs-view";
 import styles from "./tabs.module.scss";
 
 export interface TabsContainerProps {
-  readonly options: Array<{ id: string; label: string }>;
+  readonly options: Array<{ id: string; label: string; disabled?: boolean }>;
   readonly active: string;
   readonly onClick: (id: string) => void;
-  readonly disabled: boolean;
 }
 
 const TabsContainer = (props: TabsContainerProps) => {
