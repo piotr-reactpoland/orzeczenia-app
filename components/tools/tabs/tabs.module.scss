@@ -15,6 +15,10 @@
       color: white;
       background-color: green;
     }
+    &-disabled {
+      pointer-events: none;
+      color: grey;
+    }
   }
   &-container {
     margin: 20px 20px 0;

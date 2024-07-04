@@ -6,6 +6,7 @@ export interface TabsContainerProps {
   readonly options: Array<{ id: string; label: string }>;
   readonly active: string;
   readonly onClick: (id: string) => void;
+  readonly disabled: boolean;
 }
 
 const TabsContainer = (props: TabsContainerProps) => {

@@ -15,6 +15,7 @@ const BUTTONS = [
   {
     id: "1",
     label: "Opcja 1",
+    disabled: true,
   },
   {
     id: "2",
@@ -24,7 +25,7 @@ const BUTTONS = [
 
 const CategorizeView = ({ sendRequest }: CategorizeViewProps) => {
   const [fieldValue, setFieldValue] = useState("");
-  const [activeElement, setActiveElement] = useState("1");
+  const [activeElement, setActiveElement] = useState("2");
 
   const handleChange = (value: string) => {
     setFieldValue(value);

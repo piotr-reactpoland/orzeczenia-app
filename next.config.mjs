@@ -9,8 +9,8 @@ const nextConfig = {
     FETCH_CATEGORY_URL: isLocal
       ? "http://localhost:8001/category"
       : "/api/category",
-    FETCH_NODE_URL: "http://18.117.111.180/find",
-    FETCH_NODE_CAT_URL: "http://18.117.111.180/category",
+    FETCH_NODE_URL: "http://3.18.108.255/find",
+    FETCH_NODE_CAT_URL: "http://3.18.108.255/category",
   },
 };
 

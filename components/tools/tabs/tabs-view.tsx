@@ -8,12 +8,13 @@ type TabsView = TabsContainerProps;
 const TabsView = ({ options = [], active, onClick }: TabsView) => {
   return (
     <>
-      {options.map(({ id, label }) => (
+      {options.map(({ id, label, disabled }) => (
         <div
           key={id}
           role="tab"
           className={classnames(`${styles["tabs-button"]}`, {
             [styles["tabs-button-active"]]: id === active,
+            [styles["tabs-button-disabled"]]: disabled,
           })}
           onClick={() => onClick(id)}
         >

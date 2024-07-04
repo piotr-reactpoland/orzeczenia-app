@@ -2,12 +2,14 @@ import styles from "./categorize.module.scss";
 
 interface CategorizeResultProps {
   category: string;
+  result?: string;
 }
 
-const CategorizeResult = ({ category }: CategorizeResultProps) => {
+const CategorizeResult = ({ category, result }: CategorizeResultProps) => {
   return (
     <div className={styles["categorize-result"]}>
-      {category ? <p>Kategoria: prawo {category}</p> : null}
+      {category ? <p>{category}</p> : null}
+      {result ? <p>{result}</p> : null}
     </div>
   );
 };
