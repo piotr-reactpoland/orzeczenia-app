@@ -11,6 +11,7 @@ interface ResultData {
   values: {
     id: string;
     description: string;
+    original_id?: string;
   };
 }
 
@@ -33,7 +34,7 @@ const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
         <div key={values.id}>
           <p className={styles["display-results-score"]}>
             <span>Dopasowanie: {score?.toFixed(3)}</span>{" "}
-            <span>Id: {values.id}</span>
+            <span>Id: {values.original_id}</span>
           </p>
           <DisplayResultsText
             text={values.description}

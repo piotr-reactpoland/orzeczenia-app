@@ -24,7 +24,7 @@ interface Value {
 }
 
 interface Values {
-  id: string;
+  original_id: string;
   description: string;
 }
 interface CreateValue {
@@ -43,7 +43,7 @@ const getValue = ({ data, model }: Value) =>
   }));
 
 const createValue = (values: CreateValue) => ({
-  id: values?.values?.id,
+  id: values?.values?.original_id,
   score: `${values.score?.toFixed(3)}`,
 });
 
