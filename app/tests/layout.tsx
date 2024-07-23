@@ -3,6 +3,7 @@
 import { DataContextProvider } from "@/context/data-context";
 import TestNav from "@/components/test-nav/index";
 import styles from "./page.module.scss";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,9 @@ export default function RootLayout({
 }>) {
   return (
     <main className={styles.main}>
-      <TestNav />
+      <Suspense fallback={<span />}>
+        <TestNav />
+      </Suspense>
       <DataContextProvider>{children}</DataContextProvider>
     </main>
   );

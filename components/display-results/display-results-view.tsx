@@ -34,7 +34,7 @@ const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
         <div key={values.id}>
           <p className={styles["display-results-score"]}>
             <span>Dopasowanie: {score?.toFixed(3)}</span>{" "}
-            <span>Id: {values.original_id}</span>
+            <span>Id: {values.original_id || values.id}</span>
           </p>
           <DisplayResultsText
             text={values.description}
@@ -43,7 +43,10 @@ const DisplayResultsView = ({ scrollView, value }: DisplayResultsViewProps) => {
           <Button
             label="Wyświetl w nowym oknie"
             type="button"
-            onClick={handleClick({ id: values.id, score })}
+            onClick={handleClick({
+              id: values.original_id || values.id,
+              score,
+            })}
             width="200px"
           />
         </div>
