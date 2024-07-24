@@ -3,7 +3,8 @@
 import DisplayResultsView from "@/components/display-results/display-results-view";
 import styles from "./page.module.scss";
 import useSWR from "swr";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { toast } from "react-toastify";
 
 interface DisplayDetailsProps {
   readonly params: {
@@ -74,6 +75,12 @@ const DisplayDetails = ({ params, searchParams }: DisplayDetailsProps) => {
     }),
     [data, error]
   );
+  console.log("rerender");
+
+  useEffect(() => {
+    console.log(error);
+    // error && toast.error("Hello, this is a toast!");
+  }, [error]);
 
   return (
     <div className={styles["display-details-container"]}>

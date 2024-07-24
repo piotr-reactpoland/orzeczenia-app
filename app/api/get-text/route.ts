@@ -7,7 +7,6 @@ export async function GET(request: any) {
     const id = searchParams.get("id");
     const url = `${process.env.FETCH_NODE_TEXT_URL}?id=${id}`;
 
-    console.log("🚀 ~ GET ~ url:", url);
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -15,6 +14,7 @@ export async function GET(request: any) {
       },
     });
     const data = await response.json();
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
