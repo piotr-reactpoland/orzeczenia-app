@@ -8,6 +8,7 @@ import React from "react";
 import styles from "./test-search.module.scss";
 import { MODELS } from "./constants";
 import { isStatusSuccess } from "../utils/index";
+import { toastService } from "../toast/toast";
 
 interface Data {
   data: Array<any>;
@@ -126,6 +127,14 @@ const setHistory = ({ data, model, question, limit }: HistoryData) => {
   }
 };
 
+const displayError = (error: any) => {
+  const errorMsg =
+    error?.message ||
+    "Wystąpił nieoczekiwany błąd podczas wysyłania zapytania do serwera.";
+
+  toastService.error(errorMsg);
+};
+
 const DEFAULT_MODEL_OPTION = "OrlikB/st-polish-kartonberta-base-alpha-v1";
 const DEFAULT_LIMIT_OPTION = "6";
 
@@ -169,13 +178,14 @@ const TestSearchContainer = () => {
             question,
             limit,
           });
+
+          toastService.success("Wyszukiwanie zostało zakończone sukcesem");
         }
+      } else {
+        displayError(respData);
       }
     } catch (error: any) {
-      if (error.name === "AbortError") {
-        throw new Error("Request timed out");
-      }
-      throw error;
+      displayError(error);
     }
   };
 

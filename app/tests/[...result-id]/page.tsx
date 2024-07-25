@@ -1,10 +1,10 @@
 "use client";
 
+import { toastService } from "@/components/toast/toastService";
+import { useEffect, useMemo } from "react";
 import DisplayResultsView from "@/components/display-results/display-results-view";
 import styles from "./page.module.scss";
 import useSWR from "swr";
-import { useEffect, useMemo } from "react";
-import { toast } from "react-toastify";
 
 interface DisplayDetailsProps {
   readonly params: {
@@ -28,6 +28,11 @@ interface ApiResponse {
   data?: Data;
   error?: any;
 }
+
+const FETCH_SETTINGS = {
+  shouldRetryOnError: false,
+  revalidateOnFocus: false,
+};
 
 const isErrorData = (data: any): data is ErrorData => {
   return (
@@ -63,7 +68,18 @@ const DisplayDetails = ({ params, searchParams }: DisplayDetailsProps) => {
   const resultId = params?.["result-id"]?.[0];
   const score = searchParams?.score;
   const url = process.env.FETCH_TEXT_URL as string;
-  const { data, error } = useSWR<ApiResponse>(`${url}?id=${resultId}`, fetcher);
+  const { data, error } = useSWR<ApiResponse>(
+    `${url}?id=${resultId}345678`,
+    fetcher,
+    FETCH_SETTINGS
+  );
+
+  useEffect(() => {
+    if (error) {
+      const toastMsg = error?.message || "Wystąpił nieoczekiwany błąd.";
+      toastService.error(toastMsg);
+    }
+  }, [error]);
 
   const values = useMemo(
     () => ({
@@ -75,12 +91,6 @@ const DisplayDetails = ({ params, searchParams }: DisplayDetailsProps) => {
     }),
     [data, error]
   );
-  console.log("rerender");
-
-  useEffect(() => {
-    console.log(error);
-    // error && toast.error("Hello, this is a toast!");
-  }, [error]);
 
   return (
     <div className={styles["display-details-container"]}>
