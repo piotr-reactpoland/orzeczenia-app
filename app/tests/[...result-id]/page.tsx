@@ -69,7 +69,7 @@ const DisplayDetails = ({ params, searchParams }: DisplayDetailsProps) => {
   const score = searchParams?.score;
   const url = process.env.FETCH_TEXT_URL as string;
   const { data, error } = useSWR<ApiResponse>(
-    `${url}?id=${resultId}345678`,
+    `${url}?id=${resultId}`,
     fetcher,
     FETCH_SETTINGS
   );
