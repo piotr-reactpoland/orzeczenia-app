@@ -4,7 +4,7 @@ import { useDataContext } from "@/context/data-context";
 import { useForm, useFormState } from "react-hook-form";
 import Button from "../tools/button/index";
 import TestSearchFields from "./test-search-fields";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./test-search.module.scss";
 import { MODELS } from "./constants";
 import { isStatusSuccess } from "../utils/index";
@@ -148,6 +148,18 @@ const TestSearchContainer = () => {
       [FIELDS[2]]: DEFAULT_MODEL_OPTION,
     },
   });
+
+  useEffect(() => {
+    let counter = 0;
+    const timer = setTimeout(() => {
+      if (counter < 15) {
+        console.log(counter);
+        return counter++;
+      }
+
+      clearTimeout(timer);
+    }, 1000);
+  }, []);
 
   const { errors, isSubmitting } = useFormState({ control });
 
