@@ -4,7 +4,7 @@ import { useDataContext } from "@/context/data-context";
 import { useForm, useFormState } from "react-hook-form";
 import Button from "../tools/button/index";
 import TestSearchFields from "./test-search-fields";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./test-search.module.scss";
 import { MODELS } from "./constants";
 import { isStatusSuccess } from "../utils/index";
@@ -140,6 +140,7 @@ const DEFAULT_LIMIT_OPTION = "6";
 
 const TestSearchContainer = () => {
   const value = useDataContext();
+  const [count, setCount] = useState(0);
 
   const { register, handleSubmit, control } = useForm({
     defaultValues: {
@@ -150,16 +151,16 @@ const TestSearchContainer = () => {
   });
 
   useEffect(() => {
-    let counter = 0;
-    const timer = setTimeout(() => {
-      if (counter < 15) {
-        console.log(counter);
-        return counter++;
-      }
+    if (count < 10) {
+      const timeoutId = setTimeout(() => {
+        console.log(`Wiadomość nr ${count + 1}`);
+        setCount(count + 1);
+      }, 1000); // 1 sekunda opóźnienia
 
-      clearTimeout(timer);
-    }, 1000);
-  }, []);
+      // Czyszczenie timeoutu
+      return () => clearTimeout(timeoutId);
+    }
+  }, [count]);
 
   const { errors, isSubmitting } = useFormState({ control });
 
