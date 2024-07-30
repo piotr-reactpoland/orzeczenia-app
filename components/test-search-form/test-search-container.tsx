@@ -159,6 +159,11 @@ const TestSearchContainer = () => {
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
 
+    const timeout = 15000;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    const signal = controller.signal;
+
     try {
       const resp = await fetch(url, {
         method: "POST",
@@ -166,6 +171,7 @@ const TestSearchContainer = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ question, limit, model }),
+        signal,
       });
       const respData: unknown = await resp.json();
 
@@ -184,7 +190,11 @@ const TestSearchContainer = () => {
       } else {
         displayError(respData);
       }
+      clearTimeout(id);
     } catch (error: any) {
+      if (signal.aborted) {
+        throw new Error("Fetch request timed out");
+      }
       displayError(error);
     }
   };
