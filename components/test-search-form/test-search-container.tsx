@@ -151,7 +151,7 @@ const TestSearchContainer = () => {
   });
 
   useEffect(() => {
-    if (count < 10) {
+    if (count < 15) {
       const timeoutId = setTimeout(() => {
         console.log(`Wiadomość nr ${count + 1}`);
         setCount(count + 1);
