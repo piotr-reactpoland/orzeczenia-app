@@ -140,7 +140,6 @@ const DEFAULT_LIMIT_OPTION = "6";
 
 const TestSearchContainer = () => {
   const value = useDataContext();
-  const [count, setCount] = useState(0);
 
   const { register, handleSubmit, control } = useForm({
     defaultValues: {
@@ -149,18 +148,6 @@ const TestSearchContainer = () => {
       [FIELDS[2]]: DEFAULT_MODEL_OPTION,
     },
   });
-
-  useEffect(() => {
-    if (count < 15) {
-      const timeoutId = setTimeout(() => {
-        console.log(`Wiadomość nr ${count + 1}`);
-        setCount(count + 1);
-      }, 1000); // 1 sekunda opóźnienia
-
-      // Czyszczenie timeoutu
-      return () => clearTimeout(timeoutId);
-    }
-  }, [count]);
 
   const { errors, isSubmitting } = useFormState({ control });
 
@@ -172,7 +159,7 @@ const TestSearchContainer = () => {
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
 
-    const timeout = 15000;
+    const timeout = 35000;
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     const signal = controller.signal;
@@ -206,6 +193,7 @@ const TestSearchContainer = () => {
       clearTimeout(id);
     } catch (error: any) {
       if (signal.aborted) {
+        console.log("here");
         throw new Error("Fetch request timed out");
       }
       displayError(error);
