@@ -14,8 +14,8 @@ const MODELS_OPTIONS = [
   "intfloat/multilingual-e5-base",
   "intfloat/multilingual-e5-large",
   "OrlikB/st-polish-kartonberta-base-alpha-v1",
-  "sdadas/st-polish-paraphrase-from-distilroberta",
-  "sdadas/st-polish-paraphrase-from-mpnet",
+  // "sdadas/st-polish-paraphrase-from-distilroberta",
+  // "sdadas/st-polish-paraphrase-from-mpnet",
 ];
 
 const TestSearchFields = ({ register }: TestSearchFields) => {

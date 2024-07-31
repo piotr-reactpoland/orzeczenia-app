@@ -33,7 +33,7 @@ interface CreateValue {
   readonly score: number;
 }
 
-const FIELDS = ["search-input", "limit", "model"];
+const FIELDS = ["search-input", "limit", "model", "less"];
 const URL = process.env.FETCH_URL;
 const MAX_HISTORY_LENGTH = 5;
 export const SEARCH_HISTORY = "search-history";
@@ -147,6 +147,7 @@ const TestSearchContainer = () => {
       [FIELDS[0]]: "",
       [FIELDS[1]]: DEFAULT_LIMIT_OPTION,
       [FIELDS[2]]: DEFAULT_MODEL_OPTION,
+      [FIELDS[3]]: false,
     },
   });
 
@@ -156,6 +157,7 @@ const TestSearchContainer = () => {
     const question = data?.[FIELDS[0]];
     const limit = data?.[FIELDS[1]];
     const model = data?.[FIELDS[2]];
+    const lessData = data?.[FIELDS[3]] || false;
 
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
@@ -173,7 +175,7 @@ const TestSearchContainer = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question, limit, model }),
+        body: JSON.stringify({ question, limit, model, less: lessData }),
         signal,
       });
       const respData: unknown = await resp.json();
@@ -181,12 +183,13 @@ const TestSearchContainer = () => {
       if (isStatusSuccess(respData)) {
         if (respData && typeof respData === "object" && "data" in respData) {
           value?.setValue([...(respData.data as Array<any>)]);
-          setHistory({
-            data: respData.data as Array<any>,
-            model,
-            question,
-            limit,
-          });
+          !lessData &&
+            setHistory({
+              data: respData.data as Array<any>,
+              model,
+              question,
+              limit,
+            });
 
           toastService.success("Wyszukiwanie zostało zakończone sukcesem");
         }

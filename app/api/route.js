@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import fetch from "node-fetch";
 
 export async function POST(request) {
-  const timeout = 35000;
+  const timeout = 15000;
   const controller = new AbortController();
   const signal = controller.signal;
 
