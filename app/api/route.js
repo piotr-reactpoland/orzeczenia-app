@@ -7,7 +7,7 @@ export async function POST(request) {
     const { question, limit, model, less } = body;
     const url = process.env.FETCH_NODE_URL;
 
-    return NextResponse.json({ less });
+    // return NextResponse.json({ less });
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -22,7 +22,5 @@ export async function POST(request) {
       { error: "Failed to fetch data" },
       { status: 500 }
     );
-  } finally {
-    clearTimeout(timeoutId);
   }
 }
