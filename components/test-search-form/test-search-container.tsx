@@ -157,7 +157,7 @@ const TestSearchContainer = () => {
     const question = data?.[FIELDS[0]];
     const limit = data?.[FIELDS[1]];
     const model = data?.[FIELDS[2]];
-    const lessData = data?.[FIELDS[3]] || true;
+    const lessData = data?.[FIELDS[3]] || false;
 
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
