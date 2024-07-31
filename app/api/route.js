@@ -7,7 +7,7 @@ export async function POST(request) {
     const { question, limit, model, less } = body;
     const url = process.env.FETCH_NODE_URL;
 
-    // return NextResponse.json({ less });
+    return NextResponse.json({ question, limit, model, less });
     const response = await fetch(url, {
       method: "POST",
       headers: {
