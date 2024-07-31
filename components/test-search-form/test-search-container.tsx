@@ -4,7 +4,7 @@ import { useDataContext } from "@/context/data-context";
 import { useForm, useFormState } from "react-hook-form";
 import Button from "../tools/button/index";
 import TestSearchFields from "./test-search-fields";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./test-search.module.scss";
 import { MODELS } from "./constants";
 import { isStatusSuccess } from "../utils/index";
@@ -139,6 +139,7 @@ const DEFAULT_MODEL_OPTION = "OrlikB/st-polish-kartonberta-base-alpha-v1";
 const DEFAULT_LIMIT_OPTION = "6";
 
 const TestSearchContainer = () => {
+  const [apiResponseTime, setApiResponseTime] = useState(0);
   const value = useDataContext();
 
   const { register, handleSubmit, control } = useForm({
@@ -163,6 +164,8 @@ const TestSearchContainer = () => {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     const signal = controller.signal;
+
+    const startTime = new Date().getTime();
 
     try {
       const resp = await fetch(url, {
@@ -193,10 +196,13 @@ const TestSearchContainer = () => {
       clearTimeout(id);
     } catch (error: any) {
       if (signal.aborted) {
-        console.log("here");
         throw new Error("Fetch request timed out");
       }
       displayError(error);
+    } finally {
+      const endTime = new Date().getTime();
+      const apiResponseTime = endTime - startTime;
+      setApiResponseTime(new Date(apiResponseTime).getSeconds());
     }
   };
 
@@ -207,6 +213,9 @@ const TestSearchContainer = () => {
         {errors && <p>{errors?.["search-input"]?.message}</p>}
         {isSubmitting && <p>Trwa wyszukiwanie...</p>}
         <Button label="Szukaj" type="submit" disabled={isSubmitting} />
+        {apiResponseTime ? (
+          <p>Czas ostatniego wyszukiwania: {apiResponseTime} sec</p>
+        ) : null}
       </form>
     </div>
   );
