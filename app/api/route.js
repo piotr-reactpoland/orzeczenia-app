@@ -12,7 +12,7 @@ export async function POST(request) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question, limit, model, less }),
+      body: JSON.stringify({ question, limit, model, less: true }),
     });
     const data = await response.json();
     return NextResponse.json(data);
