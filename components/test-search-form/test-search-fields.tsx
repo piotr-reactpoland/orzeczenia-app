@@ -8,7 +8,7 @@ interface TestSearchFields {
   register: UseFormRegister<any>;
 }
 
-const LIMIT_OPTIONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+const LIMIT_OPTIONS = Array.from({ length: 10 }, (v, i) => `${i + 1}`);
 
 const MODELS_OPTIONS = [
   "intfloat/multilingual-e5-base",
@@ -17,6 +17,8 @@ const MODELS_OPTIONS = [
   // "sdadas/st-polish-paraphrase-from-distilroberta",
   // "sdadas/st-polish-paraphrase-from-mpnet",
 ];
+
+const DATA_SIZE = ["500", "35000"];
 
 const TestSearchFields = ({ register }: TestSearchFields) => {
   return (
@@ -38,6 +40,13 @@ const TestSearchFields = ({ register }: TestSearchFields) => {
         register={register}
         width="100%"
         name="model"
+      />
+      <Select
+        options={DATA_SIZE}
+        label="Rozmiar bazy danych"
+        register={register}
+        width="100%"
+        name="less-data"
       />
     </div>
   );

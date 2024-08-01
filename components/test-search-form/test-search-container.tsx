@@ -33,7 +33,7 @@ interface CreateValue {
   readonly score: number;
 }
 
-const FIELDS = ["search-input", "limit", "model", "less"];
+const FIELDS = ["search-input", "limit", "model", "less-data"];
 const URL = process.env.FETCH_URL;
 const MAX_HISTORY_LENGTH = 5;
 export const SEARCH_HISTORY = "search-history";
@@ -137,6 +137,7 @@ const displayError = (error: any) => {
 
 const DEFAULT_MODEL_OPTION = "OrlikB/st-polish-kartonberta-base-alpha-v1";
 const DEFAULT_LIMIT_OPTION = "6";
+const DEFAULT_DATA_SIZE = "35000";
 
 const TestSearchContainer = () => {
   const [apiResponseTime, setApiResponseTime] = useState(0);
@@ -147,7 +148,7 @@ const TestSearchContainer = () => {
       [FIELDS[0]]: "",
       [FIELDS[1]]: DEFAULT_LIMIT_OPTION,
       [FIELDS[2]]: DEFAULT_MODEL_OPTION,
-      [FIELDS[3]]: false,
+      [FIELDS[3]]: DEFAULT_DATA_SIZE,
     },
   });
 
@@ -157,7 +158,8 @@ const TestSearchContainer = () => {
     const question = data?.[FIELDS[0]];
     const limit = data?.[FIELDS[1]];
     const model = data?.[FIELDS[2]];
-    const lessData = data?.[FIELDS[3]] || false;
+    const isLessData =
+      data?.[FIELDS[3]] && data?.[FIELDS[3]] !== DEFAULT_DATA_SIZE;
 
     if (!URL) return;
     const url = process.env.FETCH_URL as string;
@@ -175,7 +177,7 @@ const TestSearchContainer = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question, limit, model, less: lessData }),
+        body: JSON.stringify({ question, limit, model, less: isLessData }),
         signal,
       });
       const respData: unknown = await resp.json();
@@ -183,7 +185,7 @@ const TestSearchContainer = () => {
       if (isStatusSuccess(respData)) {
         if (respData && typeof respData === "object" && "data" in respData) {
           value?.setValue([...(respData.data as Array<any>)]);
-          !lessData &&
+          !isLessData &&
             setHistory({
               data: respData.data as Array<any>,
               model,
