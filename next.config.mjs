@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const isLocal = process.env.NODE_ENV === "local";
-const url = "12.12.12.12";
+const url = "3.22.223.181";
 
 const nextConfig = {
   reactStrictMode: false,
